@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head> 
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Progress</title>
-	<style>
+	<style> 
 		body {
 			font-family: Arial, sans-serif;
 			margin: 2rem;
+			background-color: white;
+			color: black;
+			transition: background-color 0.3s, color 0.3s;
+		}
+		body.dark {
+			background-color: #121212;
+			color: white;
 		}
 		.category {
 			margin-bottom: 2rem;
@@ -31,29 +38,17 @@
 			margin: 0 1rem;
 			height: 1rem;
 			position: relative;
+			transition: background 0.3s;
+		}
+		body.dark .progress-container {
+			background: #333;
 		}
 		.progress-bar {
 			height: 100%;
 			background: #4caf50;
 			width: 0%;
-			transition: width 0.3s ease;
+			transition: width 0.3s ease, background-color 0.3s;
 		}
-		.progress-bar.unknown {
-			width: 100%;
-			background: repeating-linear-gradient(
-				45deg,
-				#ccc,
-				#ccc 10px,
-				#eee 10px,
-				#eee 20px
-			);
-			animation: indeterminate 1s linear infinite;
-		}
-		@keyframes indeterminate {
-			from { background-position: 0 0; }
-			to   { background-position: 20px 0; }
-		}
-		/* New “pending” animation for 100% but not released */
 		.progress-bar.pending {
 			width: 100%;
 			animation: pulse 2s ease-in-out infinite;
@@ -67,18 +62,33 @@
 			width: 60px;
 			text-align: right;
 		}
+		.toggle-button {
+			position: fixed;
+			top: 1rem;
+			right: 1rem;
+			padding: 0.5rem 1rem;
+			cursor: pointer;
+			background: #4caf50;
+			color: white;
+			border: none;
+			border-radius: 4px;
+			font-weight: bold;
+			transition: background-color 0.3s;
+		}
+		.toggle-button:hover {
+			background-color: #45a045;
+		}
 	</style>
 </head>
-<body>
+<body class="dark">
+	<button class="toggle-button" id="darkToggle">Toggle Dark Mode</button>
+
 	<div class="category" id="category1">
 		<p>Keep in mind that im just guessing the percentages (so they might go down randomly)</p>
 		<h2>Want To Hide</h2>
 		<div class="item">
-			<span class="label">Next Update</span>
-			<div class="progress-container">
-				<div class="progress-bar unknown"></div>
-			</div>
-			<span class="percent">Unknown</span>
+			<span class="label" style="width:auto; margin-right:0.5rem;">Next Update</span>
+			<div style="color: #121212; visibility: hidden;">aaaaaa...</div><span class="percent">Unknown</span>
 		</div>
 		<div class="item">
 			<span class="label">Chapter 2</span>
@@ -100,17 +110,12 @@
 		</div>
 	</div>
 	<p>Last Updated: 10th June 2025</p>
+
+	<script>
+		const toggleBtn = document.getElementById('darkToggle');
+		toggleBtn.addEventListener('click', () => {
+			document.body.classList.toggle('dark');
+		});
+	</script>
 </body>
 </html>
-
-<!--
-Pending thingy:
-
-		<div class="item">
-			<span class="label">Completed Feature</span>
-			<div class="progress-container">
-				<div class="progress-bar pending"></div>
-			</div>
-			<span class="percent">100% (Pending)</span>
-		</div>
-!-->
